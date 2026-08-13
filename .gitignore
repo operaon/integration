@@ -1,0 +1,13 @@
+node_modules/
+coverage/
+*.log
+npm-debug.log*
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Banco e artefatos locais
+*.sqlite
+*.sqlite3
+.tmp/
