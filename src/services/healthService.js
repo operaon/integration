@@ -1,9 +1,10 @@
 const { decrypt } = require('../utils/secretsCrypto');
 const env = require('../config/env');
 const logger = require('../config/logger');
+const { buildInternalHeaders } = require('../middlewares/communicationContext');
 
 const buildHeaders = (healthCheck, credentials) => {
-  const headers = { Accept: 'application/json' };
+  const headers = buildInternalHeaders({ serviceId: process.env.SERVICE_NAME || 'operaon-integration', context: {}, sourceSystem: 'integration', sourceId: String(healthCheck?.path || 'health-check'), eventType: 'integration.health.check' });
   if (healthCheck.serviceKeyField && healthCheck.serviceKeyHeader && credentials?.[healthCheck.serviceKeyField]) {
     headers[healthCheck.serviceKeyHeader] = credentials[healthCheck.serviceKeyField];
   }
