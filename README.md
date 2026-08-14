@@ -1,4 +1,15 @@
-# Operaon Integration Hub
+# Integration Hub
+
+> Integration Hub da Operaon para conectores, sincronização, health checks e integrações externas.
+
+| Item | Referência |
+|---|---|
+| Documentação | [docs/INDEX.md](docs/INDEX.md) |
+| Segurança | [SECURITY.md](SECURITY.md) |
+| Contribuição | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Processo de release | [docs/release-process.md](docs/release-process.md) |
+
+---
 
 Standalone responsável pelo catálogo de providers, configurações por ambiente, credenciais cifradas, teste de conexão e health checks das integrações da plataforma Operaon.
 
