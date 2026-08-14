@@ -36,3 +36,8 @@ O comando `npm run backfill:legacy` é somente-aditivo e possui `BACKFILL_DRY_RU
 A API central mantém as rotas legadas de integrações. O gateway oferece o namespace paralelo `/api/integration-standalone`, que encaminha para este serviço. A troca deve ocorrer gradualmente por ambiente, tenant ou feature flag. Em caso de falha, basta desativar o adapter ou retornar os consumidores para as rotas legadas; o banco antigo permanece intacto durante a migração.
 
 A especificação técnica versionada está em [`docs/integration-spec.md`](docs/integration-spec.md).
+
+<!-- OPERAON-DOCUMENTATION-LINK -->
+## Documentação
+
+A documentação técnica padronizada está em [docs/INDEX.md](docs/INDEX.md). Ela inclui arquitetura, responsabilidades, segurança, contratos, operação, testes, runbooks e decisões.
