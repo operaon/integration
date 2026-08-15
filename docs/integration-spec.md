@@ -12,7 +12,7 @@ No primeiro corte ficam fora do serviço os tokens de login Google, sessões OAu
 
 ## Segurança
 
-As rotas administrativas e internas exigem simultaneamente `X-Service-Key` e access token JWT emitido pelo Identity. O token valida algoritmo, issuer, audience e `tokenType=access`. Permissões administrativas compatíveis são `read:integration` e `manage:integration`, com aceitação dos aliases legados `integration:read` e `integration:manage`. Tokens de serviço podem consumir endpoints internos autorizados sem depender de papel fixo.
+As rotas administrativas e internas exigem simultaneamente `X-Service-Key` e access token JWT emitido pelo Identity. O token valida algoritmo, issuer, audience exclusiva `operaon-integration` e `tokenType=access`. As permissões administrativas são dinâmicas e usam exclusivamente o formato `integration:read` e `integration:manage`; tokens de serviço não recebem privilégio implícito e devem carregar a permissão necessária.
 
 Credenciais são armazenadas em envelope versionado AES-256-GCM no Integration Hub. A `ENCRYPTION_KEY` permanece exclusivamente no ambiente do serviço e nunca é enviada pelo gateway ou retornada nas respostas públicas. Auditoria registra somente campos não sensíveis; material de credential, tokens, passwords e secrets são redacted.
 
@@ -22,15 +22,15 @@ Credenciais são armazenadas em envelope versionado AES-256-GCM no Integration H
 |---|---|---|---|
 | `GET` | `/health` | Saúde básica do processo | Pública |
 | `GET` | `/ready` | Banco e readiness | Pública |
-| `GET` | `/api/integrations` | Lista pública administrativa sem credenciais | `read:integration` |
-| `GET` | `/api/integrations/:id` | Consulta sem credenciais | `read:integration` |
-| `POST` | `/api/integrations` | Cria integração cifrando credenciais | `manage:integration` |
-| `PATCH` | `/api/integrations/:id` | Atualiza configuração e/ou credenciais | `manage:integration` |
-| `DELETE` | `/api/integrations/:id` | Desativa/remover integração | `manage:integration` |
-| `POST` | `/api/integrations/:id/test` | Executa health check registrado | `manage:integration` |
-| `GET` | `/api/internal/integrations/:provider/active` | Consulta configuração ativa para consumidor confiável | Serviço autenticado |
-| `GET` | `/api/providers` | Catálogo de providers ativos | `read:integration` |
-| `POST` | `/api/providers` | Cadastra ou atualiza provider | `manage:integration` |
+| `GET` | `/api/integrations` | Lista pública administrativa sem credenciais | `integration:read` |
+| `GET` | `/api/integrations/:id` | Consulta sem credenciais | `integration:read` |
+| `POST` | `/api/integrations` | Cria integração cifrando credenciais | `integration:manage` |
+| `PATCH` | `/api/integrations/:id` | Atualiza configuração e/ou credenciais | `integration:manage` |
+| `DELETE` | `/api/integrations/:id` | Desativa/remover integração | `integration:manage` |
+| `POST` | `/api/integrations/:id/test` | Executa health check registrado | `integration:manage` |
+| `GET` | `/api/internal/integrations/:provider/active` | Consulta configuração ativa para consumidor confiável | `integration:read` |
+| `GET` | `/api/providers` | Catálogo de providers ativos | `integration:read` |
+| `POST` | `/api/providers` | Cadastra ou atualiza provider | `integration:manage` |
 
 O payload administrativo pode receber `credentials`, mas a resposta sempre substitui esse campo por `credentialsConfigured: true|false`. O endpoint interno retorna credenciais descriptografadas somente para um consumidor autenticado com chave de serviço válida e rota explícita; o gateway não deve repassar esse payload diretamente ao cliente.
 

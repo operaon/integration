@@ -21,7 +21,7 @@ O Integration Hub **não executa o domínio de negócio** dos providers. Identit
 
 ## Segurança
 
-As rotas protegidas exigem simultaneamente `X-Service-Key` e access token JWT emitido pelo Identity. O JWT valida algoritmo, issuer, audience e `tokenType=access`. O contexto `tenantId` é validado quando fornecido, e as permissões são lidas do token dinâmico (`integration:read` e `integration:manage`).
+As rotas protegidas exigem simultaneamente `X-Service-Key` e access token JWT emitido pelo Identity. O JWT valida algoritmo, issuer, audience exclusiva `operaon-integration` e `tokenType=access`. O contexto `tenantId` é validado quando fornecido, e as permissões são lidas do token dinâmico (`integration:read` e `integration:manage`). Tokens de serviço não recebem bypass automático; a permissão necessária deve estar presente no claim `permissions`.
 
 Credenciais nunca são retornadas pelas rotas públicas. Em repouso, são armazenadas em envelope **AES-256-GCM** com `encrypted`, `iv` e `authTag`. A chave `ENCRYPTION_KEY` deve ser hexadecimal de 64 caracteres e deve ser entregue pelo ambiente de execução, nunca pelo Git.
 
