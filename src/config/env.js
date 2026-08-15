@@ -16,7 +16,7 @@ const parseList = (value, fallback = []) => {
 };
 
 const host = process.env.HOST || '0.0.0.0';
-const port = Number(process.env.PORT || 4720);
+const port = Number(process.env.PORT || 4730);
 if (!Number.isInteger(port) || port <= 0 || port > 65535) throw new Error('PORT inválida');
 
 const jwtAlgorithm = process.env.JWT_ALGORITHM || 'HS256';
